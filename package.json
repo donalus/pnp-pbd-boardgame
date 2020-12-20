@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Pass-and-Play PbD Boardgame",
   "main": "main.js",
+  "type": "commonjs",
   "scripts": {
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +22,10 @@
     "electron": "^11.1.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.14",
+    "sqlite3": "^5.0.0"
   },
   "config": {
     "forge": {
@@ -30,7 +34,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "pbd_board_game"
+            "name": "pnp_pbd_boardgame"
           }
         },
         {
