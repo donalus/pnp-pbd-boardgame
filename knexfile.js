@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './data/dev.sqlite3'
+      filename: './data/game-state.dev.sqlite3'
     },
     seeds: {
       directory: './src/knex/seeds'
@@ -29,7 +29,7 @@ module.exports = {
   production: {
     client: 'sqlite3',
     connection: {
-      filename: './data/game-state.sqlite3'
+      filename: './data/game-state.prod.sqlite3'
     }
   }
 };
