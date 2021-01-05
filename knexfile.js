@@ -4,7 +4,13 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: ':memory:'
+      filename: './data/dev.sqlite3'
+    },
+    seeds: {
+      directory: './src/knex/seeds'
+    },
+    migrations: {
+      directory: './src/knex/migrations'
     },
     useNullAsDefault: true
   },
@@ -14,13 +20,16 @@ module.exports = {
       filename: ':memory:'
     },
     seeds: {
-      directory: './knex/seeds/test'
+      directory: './src/knex/seeds'
+    },
+    migrations: {
+      directory: './src/knex/migrations'
     }
   },
   production: {
     client: 'sqlite3',
     connection: {
-      filename: './knex/game-state.sqlite3'
+      filename: './data/game-state.sqlite3'
     }
   }
 };

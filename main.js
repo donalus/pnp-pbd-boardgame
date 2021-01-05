@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const knex = require('./knex/knex.js')
+const knex = require('./src/knex/knex.js')
 
 function createWindow () {
   const win = new BrowserWindow({
