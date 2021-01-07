@@ -4,6 +4,11 @@
   "description": "Pass-and-Play PbD Boardgame",
   "main": "main.js",
   "type": "commonjs",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evidlab/pnp-pbd-boardgame"
+  },
   "scripts": {
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,8 +16,17 @@
     "make": "electron-forge make"
   },
   "keywords": [],
-  "author": "Donal Heidenblad",
-  "license": "GPLv2",
+  "contributors": [
+    {
+      "name": "Donal Heidenblad",
+      "email": "dheidenb@umd.edu",
+      "url": "https://donal.us"
+    },
+    {
+      "name": "Reggie Padget"
+    }
+  ],
+  "license": "GPL-2.0-or-later",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
     "@electron-forge/maker-deb": "^6.0.0-beta.54",
@@ -20,13 +34,18 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "chia": "0.0.1",
+    "ejs-electron": "^2.1.1",
     "electron": "^11.1.1",
     "mocha": "^8.2.1"
   },
   "dependencies": {
+    "bootstrap": "^4.5.3",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
     "knex": "^0.21.15",
+    "path": "^0.12.7",
     "sqlite3": "^5.0.0"
   },
   "config": {
