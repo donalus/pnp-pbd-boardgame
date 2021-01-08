@@ -33,17 +33,16 @@ function shuffleArray(a) {
 
 function drawCard() {
   if (deckArray.length != 0) {
-    shuffleArray(deckArray);
+    
     // disableElements(obj);
     var activeCardsArray = [];
     var collected_cards = $("#collected-cards");
-    var deck = $(".pycard");
-    var currentDiv = $(this).parent();
+    
     var arrow_number = $(this).attr("data-arrow-value");
     // Get the modal
     var modal = $("#myModal");
     // Get the <span> element that closes the modal
-    var span = $($(".close").get(0));
+    var span = $(".close:first");
     // When the user clicks the button, open the modal
 
     // var chosen = shuffle();
@@ -82,90 +81,9 @@ function drawCard() {
   }
 }
 
-function cardDecisionModal(
-  collection,
-  points,
-  extraPoints,
-  type,
-  otherType,
-  msg,
-  anti_msg,
-  value
-) {
-  console.log("this");
-  for (var i = 0; i < chosenTabs.length; i++) {
-    console.log("where");
-    var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-    var pointer_elem_class = chosenTabs[i].classList[2];
-    if (pointer_elem_class == collection && pointer_elem_att == value) {
-      alert(msg);
-      addPoints(points, type);
-      console.log("add point");
-      break;
-    } else {
-      let consequence = document.getElementsByClassName(collection);
-      let modal = document.getElementById("myModal");
-      let parentDiv = document.getElementById("card-content");
-      let choiceDiv = document.createElement("div");
-      choiceDiv.style.cssFloat = "right";
-      choiceDiv.setAttribute("class", "choices");
-      // choice.classList.add("well");
-      //Modal Elements
-      let br = document.createElement("br");
-      let h3 = document.createElement("h3");
-      let mesg_text = document.createTextNode(anti_msg);
-      h3.appendChild(mesg_text);
-      choiceDiv.appendChild(h3);
-      choiceDiv.appendChild(br);
 
-      let yes_bttn = document.createElement("button");
-      yes_bttn.setAttribute("data-collection", collection);
-      yes_bttn.setAttribute("id", "decision_yes");
-      yes_bttn.setAttribute("class", "button yes-button");
-      yes_bttn.setAttribute("onclick", "cardDecisionEvent(this)");
-      let yes = document.createTextNode("Yes");
-      yes_bttn.appendChild(yes);
-      choiceDiv.appendChild(yes_bttn);
-      choiceDiv.appendChild(br);
-
-      let no_bttn = document.createElement("button");
-      no_bttn.setAttribute("data-collection", collection);
-      no_bttn.setAttribute("id", "decision_no");
-      no_bttn.setAttribute("class", "button no-button");
-      no_bttn.setAttribute("onclick", "cardDecisionEvent(this)");
-      let no = document.createTextNode("No");
-      no_bttn.appendChild(no);
-      choiceDiv.appendChild(no_bttn);
-
-      parentDiv.appendChild(choiceDiv);
-      if (extraPoints != 0) {
-        addPoints(extraPoints, otherType);
-      }
-      break;
-    }
-  }
-}
-
-function cardDecisionEvent(elem) {
-  var collection = elem.getAttribute("data-collection");
-  var modal = document.getElementById("myModal");
-  var choice = elem.id;
-  console.log(choice);
-  if (choice == "decision_yes") {
-    for (var i = 0; i < gameTabs.length; i++) {
-      if (gameTabs[i].classList[2] == collection) {
-        var obj = gameTabs[i].childNodes[21];
-        collected(obj);
-      }
-    }
-    modal.style.display = "none";
-  } else {
-    modal.style.display = "none";
-  }
-}
 
 function cardEvent(elem) {
-  var extraPoints = 0;
   var points;
   var devType = "dev";
   var userType = "user";
@@ -173,533 +91,269 @@ function cardEvent(elem) {
     points = 0;
     var selected_card;
     selected_card = elem[i].childNodes[1].id;
+    console.log("cardEvent:", selected_card);
+
     switch (selected_card) {
       case "card_2":
-        console.log(selected_card);
-        for (var i = 0; i < chosenTabs.length; i++) {
-          var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-          var pointer_elem_class = chosenTabs[i].classList[2];
+        $(
+          ".health.share.container-collected, .contacts.share.container-collected"
+        ).each(function () {
+          addPoints(-3, devType);
+        });
+
+        $(".health.share, .contacts.share").each(function () {
           if (
-            (pointer_elem_class == "container-two-a" &&
-              pointer_elem_att == 1) ||
-            (pointer_elem_class == "container-four-a" && pointer_elem_att == 1)
+            !$(this).hasClass("container-collected") &&
+            !$(this).hasClass("container-not-collected")
           ) {
-            points = -3;
-            addPoints(points, devType);
-            break;
+            dev = parseInt($(this).find(".benefit:first").text());
+            user = parseInt($(this).find(".benefit:last").text());
+            addMultiplePoints(user, dev);
+            $(this).addClass("container-not-collected");
           }
-        }
+        });
         break;
       case "card_3":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-four-a";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You Shared Contact List, You will lose 3 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to chose to not share contact list in the future?";
-        //points affected
-        points = -3;
-        //type of points affected
-        var type = devType;
+        $(".contacts.share.container-collected").each(function () {
+          addPoints(-3, devType);
+        });
 
-        //Conditinal params
-        extraPoints = 0;
-        var otherType = devType;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        $(".contacts.share").each(function () {
+          if (
+            !$(this).hasClass("container-collected") &&
+            !$(this).hasClass("container-not-collected")
+          ) {
+            dev = parseInt($(this).find(".benefit:first").text());
+            user = parseInt($(this).find(".benefit:last").text());
+            addMultiplePoints(user, dev);
+            $(this).addClass("container-not-collected");
+          }
+        });
         break;
       case "card_4":
-        console.log(selected_card);
         points = 1;
-        addPoints(points, devType);
+        addPoints(1, devType);
         break;
       case "card_5":
-        console.log(selected_card);
         points = 2;
         addPoints(points, devType);
         break;
       case "card_6":
-        console.log(selected_card);
         points = 3;
         addPoints(points, devType);
         break;
       case "card_7":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-two-a";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You Shared Information with Other Companies, You will Gaine 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to chose Sharing health information with other companies now to earns 5 developer resources?";
-        //points affected
-        points = 2;
-        //type of points affected
-        var type = devType;
-        //Extra points added because of condition if applicable
-        //Conditinal params
-        var otherType = devType;
-        extraPoints = 5;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".health.share.corporations").hasClass("container-collected")) {
+          points = 2;
+          addPoints(points, devType);
+        } else {
+          $(".health.share.corporations .cost:first").text("+5");
+        }
         break;
       case "card_8":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-three-b";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You shared purchasing information with other companies, You will Gaine 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to chose shared purchasing information with other companies now to earns 7 developer resources?";
-        //points affected
-        points = 2;
-        //type of points affected
-        var type = devType;
-        //Extra points added because of condition if applicable
-        var otherType = devType;
-        extraPoints = 7;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if (
+          $(".purchasing.share.corporations").hasClass("container-collected")
+        ) {
+          points = 2;
+          addPoints(points, devType);
+        } else {
+          $(".purchasing.share.corporations .cost:first").text("+5");
+        }
         break;
       case "card_9":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-four-a";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You you shared contact lists with other companies, You will Gaine 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to chose Sharing contact lists with other companies now to earns 5 developer resources?";
-        //points affected
-        points = 2;
-        //type of points affected
-        var type = devType;
-        //Extra points added because of condition if applicable
-        var otherType = devType;
-        extraPoints = 5;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".contacts.share.corporations").hasClass("container-collected")) {
+          points = 2;
+          addPoints(points, devType);
+        } else {
+          $(".contacts.share.corporations .cost:first").text("+5");
+        }
         break;
       case "card_10":
-        //Card 10 has no functionality
+        if ($(".location.share.corporations").hasClass("container-collected")) {
+          points = 3;
+          addPoints(points, devType);
+        } else {
+          $(".location.share.corporations .cost:first").text("+6");
+        }
         break;
       case "card_11":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-six-b";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You collected location data to provide service and maintain site, You will Gaine 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to collect location data to provide service and maintain site now to earns 3 developer resources?";
-        //points affected
-        points = 1;
-        //type of points affected
-        var type = devType;
-        //Extra points added because of condition if applicable
-        var otherType = devType;
-        extraPoints = 3;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".health.service.collect").hasClass("container-collected")) {
+          points = 1;
+          addPoints(points, devType);
+        } else {
+          $(".health.service.colllect .cost:first").text("+3");
+        }
         break;
       case "card_13":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-five-a";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You collected site activity for profiling, You will Gaine 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to collected site activity for profiling now to earns 3 developer resources?";
-        //points affected
-        points = 2;
-        //type of points affected
-        var type = devType;
-        //Extra points added because of condition if applicable
-        var otherType = devType;
-        extraPoints = 3;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".activity.profiling.collect").hasClass("container-collected")) {
+          points = 1;
+          addPoints(points, devType);
+        } else {
+          $(".activity.profiling.collect .cost:first").text("+3");
+        }
         break;
       case "card_14":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-four-b";
-        //1 = colledted 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Because You collected contact lists to provide service and maintain site, You will Gaine 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to collect contact lists to provide service and maintain site now to earns 3 developer resources?";
-        //points affected
-        points = 1;
-        //type of points affected
-        var type = devType;
-        //Extra points added because of condition if applicable
-        var otherType = devType;
-        extraPoints = 2;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".contacts.service.collect").hasClass("container-collected")) {
+          points = 1;
+          addPoints(points, devType);
+        } else {
+          $(".contacts.service.collect .cost:first").text("+2");
+        }
         break;
       case "card_15":
-        console.log(selected_card);
-        for (var i = 0; i < chosenTabs.length; i++) {
-          var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-          var pointer_elem_class = chosenTabs[i].classList[2];
-          if (
-            (pointer_elem_class == "container-one-a" &&
-              pointer_elem_att == 1) ||
-            (pointer_elem_class == "container-four-a" && pointer_elem_att == 1)
-          ) {
-            points = 1;
-            addPoints(points, devType);
-          }
+        if ($(".demographic.service.collect").hasClass("container-collected")) {
+          points = 1;
+          addPoints(points, devType);
         }
         break;
       case "card_17":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-four-b";
-        //1 = colledted 0 = not collected
-        var value = 0;
-        //Message if collection in question is collected
-        var msg =
-          "Because you decided not to collect contact lists for any reason, You will lose 2 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to NOT collect contact lists site now to earns 3 developer resources?";
-        //points affected
-        points = 3;
-        //type of points affected
-        var type = userType;
-
-        //Extra points added because of condition if applicable
-        var other_type = devType;
-        extraPoints = 3;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if (
+          $(
+            ".contacts.share.container-collected, .contacts.collect.container-collected"
+          ).length > 0
+        ) {
+          points = 3;
+          addPoints(points, userType);
+        } else {
+          $(".contacts.collect").each(function () {
+            item = $(this).find(".benefit:first");
+            curBene = parseInt(item.text());
+            item.text(curBene + 3);
+          });
+        }
         break;
       case "card_18":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-five-a";
-        //1 = colledted, 0 = not collected
-        var value = 0;
-        //Message if collection in question is collected
-        var msg =
-          "Because you decided you decided not to collect site activity for any reason, You will gain 3 Developer Resources";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to NOT collect contact lists site now to earns 3 developer resources?";
-        //points affected
-        points = 3;
-        //type of points affected
-        var type = userType;
-
-        //Extra points added because of condition if applicable
-        var other_type = userType;
-        extraPoints = 3;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if (
+          $(
+            ".activity.share.container-collected, .activity.collect.container-collected"
+          ).length > 0
+        ) {
+          points = 3;
+          addPoints(points, userType);
+        } else {
+          $(".activity.collect").each(function () {
+            item = $(this).find(".benefit:last");
+            curBene = parseInt(item.text());
+            item.text(curBene + 3);
+          });
+        }
         break;
       case "card_19":
-        console.log(selected_card);
-        for (var i = 0; i < chosenTabs.length; i++) {
-          var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-          var pointer_elem_class = chosenTabs[i].classList[2];
-          if (
-            pointer_elem_class == "container-one-a" &&
-            pointer_elem_att == 0
-          ) {
-            points = 3;
-            addPoints(points, devType);
-          }
+        if (
+          $(
+            ".demographic.share.container-collected, .demographic.collect.container-collected"
+          ).length > 0
+        ) {
+          points = 3;
+          addPoints(points, userType);
         }
         break;
       case "card_20":
-        // *Change Logic for this* //
-        console.log(selected_card);
-        for (var i = 0; i < chosenTabs.length; i++) {
-          var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-          var pointer_elem_class = chosenTabs[i].classList[2];
-          if (
-            pointer_elem_class == "container-one-a" &&
-            pointer_elem_att == 1
-          ) {
-            points = 3;
-            addPoints(points, devType);
-          }
+        if ($(".corporations.share.container-collected").length > 3) {
+          addMultiplePoints(-2, -2);
         }
         break;
       case "card_21":
-        console.log(selected_card);
-        for (var i = 0; i < chosenTabs.length; i++) {
-          var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-          var pointer_elem_class = chosenTabs[i].classList[2];
-          if (
-            (pointer_elem_class == "container-one-b" &&
-              pointer_elem_att == 0) ||
-            (pointer_elem_class == "container-two-a" &&
-              pointer_elem_att == 0) ||
-            (pointer_elem_class == "container-three-b" &&
-              pointer_elem_att == 0) ||
-            (pointer_elem_class == "container-four-a" &&
-              pointer_elem_att == 0) ||
-            (pointer_elem_class == "container-five-b" &&
-              pointer_elem_att == 0) ||
-            (pointer_elem_class == "container-six-a" && pointer_elem_att == 0)
-          ) {
-            points = 2;
-            addMultiplePoints(points, points);
-          }
+        if ($(".corporations.share.container-collected").length == 0) {
+          addMultiplePoints(2, 2);
         }
         break;
       case "card_22":
-        console.log(selected_card);
-        //Do Not Understand Logic surrounding this one.
-
+        $(".demographic.profiling, .health.profiling").each(function () {
+          var devCost = parseInt($(this).find(".cost:first").text());
+          var userCost = parseInt($(this).find(".cost:last").text());
+          var devBene = parseInt($(this).find(".benefit:first").text());
+          var userBene = parseInt($(this).find(".benefit:last").text());
+          if ($(this).hasClass("container-not-collected")) {
+            $(this).removeClass("container-not-collected");
+            $(this).addClass("container-collected");
+            addMultiplePoints(userCost - userBene, devCost - devBene);
+          } else if (!$(this).hasClass("container-collected")) {
+            $(this).addClass(".container-collected");
+            addMultiplePoints(userCost, devCost);
+          }
+        });
         break;
       case "card_23":
-        console.log(selected_card);
-        //Do Not Understand Logic surrounding this one.
+        $(".purchasing.marketing, .contacts.marketing").each(function () {
+          var devCost = parseInt($(this).find(".cost:first").text());
+          var userCost = parseInt($(this).find(".cost:last").text());
+          var devBene = parseInt($(this).find(".benefit:first").text());
+          var userBene = parseInt($(this).find(".benefit:last").text());
+          if ($(this).hasClass("container-not-collected")) {
+            $(this).removeClass("container-not-collected");
+            $(this).addClass("container-collected");
+            addMultiplePoints(userCost - userBene, devCost - devBene);
+          } else if ($(this).hasClass("container-collected")) {
+            addPoints(1, devType);
+          }
+        });
+        if (
+          !$(".purchasing.marketing").hasClass("container-collected") &&
+          !$(".purchasing.marketing").hasClass("container-not-collected")
+        ) {
+          $(".purchasing.marketing").find(".cost:first").text(5);
+        }
         break;
       case "card_24":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-two-b";
-        //1 = colledted, 0 = not collected
-        var value = 0;
-        //Message if collection in question is collected
-        var msg =
-          "Gain 3 developer resources if you did not collect health information for any reason";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to Not collecting health information for any reason earns 3 extra developer resources (in addition to what's written on the board)?";
-        //points affected
-        points = 3;
-        //type of points affected
-        var type = devType;
-
-        //Extra points added because of condition if applicable
-        var other_type = devType;
-        extraPoints = 3;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".health.collect.container-not-collected").length == 3) {
+          points = 3;
+          addPoints(points, devType);
+        } else {
+          $(".health.collect").each(function () {
+            if (
+              !$(this).hasClass("container-collected") &&
+              !$(this).hasClass("container-not-collected")
+            ) {
+              var item = $(this).find(".benefit:first");
+              var cur_dev_points = parseInt(item.text());
+              item.text(cur_dev_points + 3);
+            }
+          });
+        }
         break;
       case "card_25":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-four-b";
-        //1 = colledted, 0 = not collected
-        var value = 0;
-        //Message if collection in question is collected
-        var msg =
-          "Gain 1 developer resource if you did not collect contact lists for any reason";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to Not collecting health information for any reason earns 3 extra developer resources (in addition to what's written on the board)?";
-        //points affected
-        points = 1;
-        //type of points affected
-        var type = devType;
-
-        //Extra points added because of condition if applicable
-        var other_type = devType;
-        extraPoints = 1;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".contacts.collect.container-not-collected").length == 3) {
+          points = 1;
+          addPoints(points, devType);
+        } else {
+          $(".contacts.collect").each(function () {
+            if (
+              !$(this).hasClass("container-collected") &&
+              !$(this).hasClass("container-not-collected")
+            ) {
+              var item = $(this).find(".benefit:first");
+              var cur_dev_points = parseInt(item.text());
+              item.text(cur_dev_points + 1);
+            }
+          });
+        }
         break;
       case "card_26":
-        if (checkScore(userType) > 15) {
+        if (parseInt($("#user-points").text()) > 15) {
           points = 1;
           addPoints(points, devType);
         }
         break;
       case "card_28":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-two-a";
-        //1 = colledted, 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Lose 2 users trusts if you shared health information with other companies.";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to Share health information with other companies now costs 6 user trusts?";
-        //points affected
-        points = -2;
-        //type of points affected
-        var type = userType;
-
-        //Extra points added because of condition if applicable
-        var other_type = userType;
-        extraPoints = -6;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".health.corporations.container-collected").length > 0) {
+          points = -2;
+          addPoints(points, userType);
+        }
+        $(".health.corporations .cost:last").text("-6");
         break;
       case "card_29":
-        console.log(selected_card);
-        //Name of the Class of Cards affected
-        var collection = "container-five-a";
-        //1 = colledted, 0 = not collected
-        var value = 1;
-        //Message if collection in question is collected
-        var msg =
-          "Lose 2 user trusts if you shared site activity with other companies";
-        //Question to Be Asked
-        var anti_msg =
-          "Do you want to Share health information with other companies now costs 7 user trusts?";
-        //points affected
-        points = -2;
-        //type of points affected
-        var type = userType;
-
-        //Extra points added because of condition if applicable
-        var other_type = userType;
-        extraPoints = -7;
-        cardDecisionModal(
-          collection,
-          points,
-          extraPoints,
-          type,
-          otherType,
-          msg,
-          anti_msg,
-          value
-        );
+        if ($(".activity.corporations").hasClass("container-collected")) {
+          points = -2;
+          addPoints(points, userType);
+        } else {
+          $(".activity.corporations").find(".cost:last").text("-7");
+        }
         break;
       case "card_30":
-        console.log(selected_card);
-        for (var i = 0; i < chosenTabs.length; i++) {
-          var pointer_elem_att = chosenTabs[i].getAttribute("collected");
-          var pointer_elem_class = chosenTabs[i].classList[2];
-          if (
-            pointer_elem_class == "container-six-a" &&
-            pointer_elem_att == 1
-          ) {
-            points = -2;
-            addPoints(points, userType);
-          }
+        if ($(".location.collected.container-collected").length > 0) {
+          points = -2;
+          addPoints(points, userType);
         }
         break;
       case "card_31":
@@ -715,42 +369,42 @@ function cardEvent(elem) {
         addPoints(points, userType);
         break;
       case "card_34":
-        //Do Not Understand Logic surrounding this one.
+        $(".collect.container-collected").each(function () {
+          var categories = [
+            "demographics",
+            "health",
+            "purchasing",
+            "contacts",
+            "activity",
+            "location",
+          ];
+          categories.forEach(function (category) {
+            if ($(this).hasClass(category)) {
+              var gov = $(".share.government." + category);
+              var devCost = parseInt(gov.find(".cost:first").text());
+              var userCost = parseInt(gov.find(".cost:last").text());
+              var devBene = parseInt(gov.find(".benefit:first").text());
+              var userBene = parseInt(gov.find(".benefit:first").text());
+              if (gov.hasClass(".container-not-collected")) {
+                gov.removeClass("container-not-collected");
+                gov.addClass("container-collected");
+                addMultiplePoints(userCost - userBene, devCost - devBene);
+              } else if (!gov.hasClass(".container-collected")) {
+                gov.addClass("container-collected");
+                addMultiplePoints(userCost, devCost);
+              }
+            }
+          });
+        });
         break;
       case "card_36":
-        //Do Not Understand Logic surrounding this one.
+        //User Action
         break;
       default:
     }
   }
 }
 
-function disableElements(elem) {
-  var elem_id = elem.id;
-
-  if (elem_id == "arrow_one") {
-    var row = document.getElementsByClassName("row-one-a");
-    for (var i = 0; i < row.length; i++) {
-      row[i].setAttribute("style", "opacity: 0.4; pointer-events: none");
-    }
-  } else if (elem_id == "arrow_two") {
-    var row = document.getElementsByClassName("row-one-b");
-    for (var i = 0; i < row.length; i++) {
-      row[i].setAttribute("style", "opacity: 0.4; pointer-events: none");
-    }
-    // row.style.opacity = "0.4";
-    // row.stlye.pointerEvents = "none";
-  } else if (elem_id == "arrow_three") {
-  } else if (elem_id == "arrow_four") {
-  } else if (elem_id == "arrow_five") {
-  } else if (elem_id == "arrow_six") {
-  } else if (elem_id == "arrow_seven") {
-  } else if (elem_id == "arrow_eight") {
-  } else if (elem_id == "arrow_nine") {
-  } else if (elem_id == "arrow_ten") {
-  } else if (elem_id == "arrow_eleven") {
-  }
-}
 
 function addPoints(points, type) {
   $("#loadingModal").show();
@@ -796,10 +450,10 @@ function addMultiplePoints(user_points, dev_points) {
 function collected() {
   var theButton = $(this);
   var currentDiv = theButton.parent();
-  var devTimeCost = parseInt($(currentDiv.find(".cost").get(0)).html());
-  var userTrustCost = parseInt($(currentDiv.find(".cost").get(1)).html());
-  var devTimeBenefit = parseInt($(currentDiv.find(".benefit").get(0)).html());
-  var userTrustBenefit = parseInt($(currentDiv.find(".benefit").get(1)).html());
+  var devTimeCost = parseInt(currentDiv.find(".cost:first").text());
+  var userTrustCost = parseInt(currentDiv.find(".cost:last").text());
+  var devTimeBenefit = parseInt(currentDiv.find(".benefit:first").text());
+  var userTrustBenefit = parseInt(currentDiv.find(".benefit:last").text());
   var devTimeDelta;
   var userTrustDelta;
   var devTime = 0;
@@ -823,7 +477,7 @@ function collected() {
     theButton.hasClass("collect-button")
   ) {
     collected = 1;
-    
+
     devTime = devTimeCost - devTimeDelta;
     userTrust = userTrustCost - userTrustDelta;
 
@@ -831,7 +485,7 @@ function collected() {
     currentDiv.addClass("container-collected");
   } else {
     collected = 0;
-    
+
     devTime = devTimeBenefit - devTimeDelta;
     userTrust = userTrustBenefit - userTrustDelta;
 

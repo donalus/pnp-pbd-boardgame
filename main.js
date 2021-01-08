@@ -10,7 +10,6 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1320,
     height:960,
-    maxWidth:1320,
     webPreferences: {
       //nodeIntegration: true,
       preload: path.join(__dirname, "src","preload.js"),

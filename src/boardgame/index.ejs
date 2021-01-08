@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="cache-control" content="max-age=0" />
@@ -14,99 +15,113 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" type="text/css" href="../public/stylesheets/gameBoard.css">
 
-  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
   <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
   <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <title>PbDBoardGame</title>
 
   <link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.min.css">
   <script>
-  var team_id = "<%= currentTeam._id %>";
+    var team_id = "<%= currentTeam._id %>";
   </script>
 
   <script src="../public/controller/index.js"> </script>
-  
+
   <script>if (window.module) module = window.module;</script>
 </head>
+
 <body>
-<div class="topnav" id="myTopnav">
-  <!--a href="/" class="active">Home</a-->
-  <a id="openNav" href="#">Check Score</a>
-  <a id="resetGame" href="#">Reset Game</a>
-  <div class="topnav-right">
-    <!--a id="saveGame" href="#">Save Game</a-->
-  </div>
-</div>
-
-<div id="mySidenav" class="sidenav">
-  <a href="#" class="closebtn" id="closeNav">&times;</a>
-  <div id = "scoreBoard">
-    <div class = "team">
-      <center><h2> Team <%= currentTeam.teamname %></h2></center>
-      <div class="score-grid-tabs container">
-        <div id = "dev-score" class="score-grid-item">Developer Time</div>
-        <div id = "dev-points" class="score-grid-item"><%= currentTeam.developertime %></div>
-        <div id = "user-score" class="score-grid-item">User Trust</div>
-        <div id = "user-points" class="score-grid-item"><%= currentTeam.usertrust %></div>
-      </div>
-    </div>
-    <div>
-      <center><h2>Cards Drawn</h2></center>
-      <div id = "collected-cards">
-
-      </div>
+  <div class="topnav" id="myTopnav">
+    <!--a href="/" class="active">Home</a-->
+    <a id="openNav" href="#">Check Score</a>
+    <a id="resetGame" href="#">Reset Game</a>
+    <div class="topnav-right">
+      <!--a id="saveGame" href="#">Save Game</a-->
     </div>
   </div>
-</div>
-<%- include('cards') %>
 
-<!--  Modal   -->
-<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div id="modal-content">
-      <div class="modal-body text-center">
-        <div class="loader"></div>
-        <div class="loader-txt">
-          <p>Adding Points...</p>
+  <div id="mySidenav" class="sidenav">
+    <a href="#" class="closebtn" id="closeNav">&times;</a>
+    <div id="scoreBoard">
+      <div class="team">
+        <center>
+          <h2> Team <%= currentTeam.teamname %>
+          </h2>
+        </center>
+        <div class="score-grid-tabs container">
+          <div id="dev-score" class="score-grid-item">Developer Time</div>
+          <div id="dev-points" class="score-grid-item">
+            <%= currentTeam.developertime %>
+          </div>
+          <div id="user-score" class="score-grid-item">User Trust</div>
+          <div id="user-points" class="score-grid-item">
+            <%= currentTeam.usertrust %>
+          </div>
+        </div>
+      </div>
+      <div>
+        <center>
+          <h2>Cards Drawn</h2>
+        </center>
+        <div id="collected-cards">
+
         </div>
       </div>
     </div>
   </div>
-</div>
+  <%- include('cards') %>
 
-<!--  Modal   -->
-<div id="myModal"  class="modal">
-  <!-- Modal content -->
-  <div id="card-content">
-    <span class="close">&times;</span>
-      <div id = "deck_content"></div>
-  </div>
-</div>
-
-
-
-<!--************************Row One *****************************************-->
-
-  <div class="holder">
-      <div class = "titles">
-        <div class = "title-left">
-          <span><h1>Collecting Demographic Information</h1></span>
+    <!--  Modal   -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div id="modal-content">
+          <div class="modal-body text-center">
+            <div class="loader"></div>
+            <div class="loader-txt">
+              <p>Adding Points...</p>
+            </div>
+          </div>
         </div>
-        <div class = "title-right">
-          <span><h1>Sharing Demographic Information</h1></span>
+      </div>
+    </div>
+
+    <!--  Modal   -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div id="card-content">
+        <span class="close">&times;</span>
+        <div id="deck_content"></div>
+      </div>
+    </div>
+
+
+
+    <!--************************Row One *****************************************-->
+
+    <div class="holder">
+      <div class="titles">
+        <div class="title-left">
+          <span>
+            <h1>Collecting Demographic Information</h1>
+          </span>
+        </div>
+        <div class="title-right">
+          <span>
+            <h1>Sharing Demographic Information</h1>
+          </span>
         </div>
       </div>
       <div class="wrapper">
         <center>
-          <div id = "1" class="tabs container-one container-one-a">
+          <div id="1" class="tabs container-one container-one-a demographic service collect">
             <h4>Provide Service, Maintain Site</h4>
-            <span class = "cost">-2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit" >0</span>
+            <span class="cost">-2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">0</span>
             <br>
-            <span class = "cost">0</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">0</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -114,16 +129,16 @@
         </center>
       </div>
       <div class="wrapper">
-          <center>
-          <div id = "2" class="tabs container-one container-one-a">
+        <center>
+          <div id="2" class="tabs container-one container-one-a demographic marketing collect">
             <h4>Marketing</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost" data-value = "0">0</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit" data-value = "1">+1</span>
+            <span class="cost" data-value="0">0</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit" data-value="1">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -131,36 +146,37 @@
         </center>
       </div>
       <div class="wrapper">
-          <center>
-          <div id = "3" class="tabs container-one container-one-a">
+        <center>
+          <div id="3" class="tabs container-one container-one-a demographic profiling collect">
             <h4>Profiling</h4>
-            <span class = "cost" >+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit" >-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-1</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit" >+1</span>
+            <span class="cost">-1</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
           </div>
-        </cetner>
+          </cetner>
       </div>
       <div class="wrapper">
-          <div data-arrow-value = "1" id = "arrow_one" class="draw-card arrow-right-div"><span class="arrow-right"></span>Draw One Card</div>
+        <div data-arrow-value="1" id="arrow_one" class="draw-card arrow-right-div"><span class="arrow-right"></span>Draw
+          One Card</div>
       </div>
       <div class="wrapper">
-          <center>
-          <div id = "4" class="tabs container-one container-one-b">
+        <center>
+          <div id="4" class="tabs container-one container-one-b demographic corporations share">
             <h4>Other Corps</h4>
-            <span class = "cost">+4</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">+4</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -168,16 +184,16 @@
         </center>
       </div>
       <div class="wrapper">
-          <center>
-          <div id = "5" class="tabs container-one container-one-b">
+        <center>
+          <div id="5" class="tabs container-one container-one-b demographic academics share">
             <h4>Academic Researchers</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">0</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+1</span>
+            <span class="cost">0</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -185,47 +201,52 @@
         </center>
       </div>
       <div class="wrapper">
-          <center>
-          <div id = "6" class="tabs container-one container-one-b">
+        <center>
+          <div id="6" class="tabs container-one container-one-b demographic government share">
             <h4>Government on Request</h4>
-            <span class = "cost">-3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">-3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">0</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">0</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
           </div>
         </center>
-      </div>
-  </div>
-  <div class="wrapper">
-      <div data-arrow-value="1" id="arrow_two" class="draw-card arrow-down-div"><span class="arrow-down"></span>Draw One Card</div>
-  </div>
-  <!--************************Row Two ****************************************-->
-  <div class="holder-two">
-    <div class = "titles">
-      <div class = "title-left">
-        <span><h1>Sharing Health Information</h1></span>
-      </div>
-      <div class = "title-right">
-        <span><h1>Collecting Health Information</h1></span>
       </div>
     </div>
+    <div class="wrapper">
+      <div data-arrow-value="1" id="arrow_two" class="draw-card arrow-down-div"><span class="arrow-down"></span>Draw One
+        Card</div>
+    </div>
+    <!--************************Row Two ****************************************-->
+    <div class="holder-two">
+      <div class="titles">
+        <div class="title-left">
+          <span>
+            <h1>Sharing Health Information</h1>
+          </span>
+        </div>
+        <div class="title-right">
+          <span>
+            <h1>Collecting Health Information</h1>
+          </span>
+        </div>
+      </div>
       <div class="wrapper-two">
         <center>
-          <div id = "7" class="tabs container-two container-two-a">
+          <div id="7" class="tabs container-two container-two-a health government share">
             <h4>Government On Request</h4>
-            <span class = "cost">-3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">-3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">-5</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-5</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -233,16 +254,16 @@
         </center>
       </div>
       <div class="wrapper-two">
-          <center>
-          <div id = "8" class="tabs container-two container-two-a">
+        <center>
+          <div id="8" class="tabs container-two container-two-a health academics share">
             <h4>Academic Research</h4>
-            <span class = "cost">+3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">+3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -250,36 +271,37 @@
         </center>
       </div>
       <div class="wrapper-two">
-          <center>
-          <div id = "9" class="tabs container-two container-two-a">
+        <center>
+          <div id="9" class="tabs container-two container-two-a health corporations share">
             <h4>Other Corps</h4>
-            <span class = "cost">+3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-5</span>
+            <span class="cost">+3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-5</span>
             <br>
-            <span class = "cost">-4</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-4</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
           </div>
-        </cetner>
+          </cetner>
       </div>
       <div class="wrapper-two">
-          <div data-arrow-value="2" id="arrow_three" class="draw-card arrow-left-div"><span class="arrow-left"></span>Draw Two Cards</div>
+        <div data-arrow-value="2" id="arrow_three" class="draw-card arrow-left-div"><span class="arrow-left"></span>Draw
+          Two Cards</div>
       </div>
       <div class="wrapper-two">
-          <center>
-          <div id = "10" class="tabs container-two container-two-b">
+        <center>
+          <div id="10" class="tabs container-two container-two-b health profiling collect">
             <h4>Profiling</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-1</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+1</span>
+            <span class="cost">-1</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -287,16 +309,16 @@
         </center>
       </div>
       <div class="wrapper-two">
-          <center>
-          <div id = "11" class="tabs container-two container-two-b">
+        <center>
+          <div id="11" class="tabs container-two container-two-b health marketing collect">
             <h4>Marketing</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-4</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-4</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -304,48 +326,53 @@
         </center>
       </div>
       <div class="wrapper-two">
-          <center>
-          <div id = "12" class="tabs container-two container-two-b">
+        <center>
+          <div id="12" class="tabs container-two container-two-b health service collect">
             <h4>Provide Service, maintain site</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">0</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">0</span>
             <br>
-            <span class = "cost">0</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">0</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
           </div>
         </center>
       </div>
-  </div>
-  <div class="wrapper-two">
-      <div data-arrow-value = "2" id = "arrow_four" class="draw-card arrow-down2-div"><span class="arrow-down2"></span>Draw Two Cards</div>
-  </div>
-
-  <!--************************Row Three *****************************************-->
-  <div class="holder-three">
-    <div class = "titles">
-      <div class = "title-left">
-        <span><h1>Collecting Purchasing Information</h1></span>
-      </div>
-      <div class = "title-right">
-        <span><h1>Sharing Purchasing Information</h1></span>
-      </div>
     </div>
+    <div class="wrapper-two">
+      <div data-arrow-value="2" id="arrow_four" class="draw-card arrow-down2-div"><span class="arrow-down2"></span>Draw
+        Two Cards</div>
+    </div>
+
+    <!--************************Row Three *****************************************-->
+    <div class="holder-three">
+      <div class="titles">
+        <div class="title-left">
+          <span>
+            <h1>Collecting Purchasing Information</h1>
+          </span>
+        </div>
+        <div class="title-right">
+          <span>
+            <h1>Sharing Purchasing Information</h1>
+          </span>
+        </div>
+      </div>
       <div class="wrapper-three">
         <center>
-          <div id = "13" class="tabs container-three container-three-a">
+          <div id="13" class="tabs container-three container-three-a purchasing service collect">
             <h4>Provide Service, Maintain Site</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-1</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-1</span>
             <br>
-            <span class = "cost">+1</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">-1</span>
+            <span class="cost">+1</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">-1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -353,16 +380,16 @@
         </center>
       </div>
       <div class="wrapper-three">
-          <center>
-          <div id = "14" class="tabs container-three container-three-a">
+        <center>
+          <div id="14" class="tabs container-three container-three-a purchasing marketing collect">
             <h4>Marketing</h4>
-            <span class = "cost">+4</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">+4</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -370,36 +397,37 @@
         </center>
       </div>
       <div class="wrapper-three">
-          <center>
-          <div id = "15" class="tabs container-three container-three-a">
+        <center>
+          <div id="15" class="tabs container-three container-three-a purchasing profiling collect">
             <h4>Profiling</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+1</span>
+            <span class="cost">-2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
           </div>
-        </cetner>
+          </cetner>
       </div>
       <div class="wrapper-three">
-          <div data-arrow-value = "2" id = "arrow_five" class="draw-card arrow-right-div"><span class="arrow-right"></span>Draw Two Cards</div>
+        <div data-arrow-value="2" id="arrow_five" class="draw-card arrow-right-div"><span
+            class="arrow-right"></span>Draw Two Cards</div>
       </div>
       <div class="wrapper-three">
-          <center>
-          <div id = "16" class="tabs container-three container-three-b">
+        <center>
+          <div id="16" class="tabs container-three container-three-b purchasing corporations share">
             <h4>Other Corps</h4>
-            <span class = "cost">+5</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">+5</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-6</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+4</span>
+            <span class="cost">-6</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+4</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -407,16 +435,16 @@
         </center>
       </div>
       <div class="wrapper-three">
-          <center>
-          <div id = "17" class="tabs container-three container-three-b">
+        <center>
+          <div id="17" class="tabs container-three container-three-b purchasing academics share">
             <h4>Academic Researchers</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -424,48 +452,53 @@
         </center>
       </div>
       <div class="wrapper-three">
-          <center>
-          <div id = "18" class="tabs container-three container-three-b">
+        <center>
+          <div id="18" class="tabs container-three container-three-b purchasing government share">
             <h4>Government on request</h4>
-            <span class = "cost">-3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">-3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
           </div>
         </center>
-      </div>
-  </div>
-  <div class="wrapper-three">
-      <div data-arrow-value = "3" id = "arrow_six" class="draw-card arrow-down3-div"><span class="arrow-down3"></span>Draw Three Cards</div>
-  </div>
-
-  <!--************************Row Four ****************************************-->
-  <div class="holder-four">
-    <div class = "titles">
-      <div class = "title-left">
-        <span><h1>Sharing Contact Lists</h1></span>
-      </div>
-      <div class = "title-right">
-        <span><h1>Collecting Contact Lists</h1></span>
       </div>
     </div>
+    <div class="wrapper-three">
+      <div data-arrow-value="3" id="arrow_six" class="draw-card arrow-down3-div"><span class="arrow-down3"></span>Draw
+        Three Cards</div>
+    </div>
+
+    <!--************************Row Four ****************************************-->
+    <div class="holder-four">
+      <div class="titles">
+        <div class="title-left">
+          <span>
+            <h1>Sharing Contact Lists</h1>
+          </span>
+        </div>
+        <div class="title-right">
+          <span>
+            <h1>Collecting Contact Lists</h1>
+          </span>
+        </div>
+      </div>
       <div class="wrapper-four">
         <center>
-          <div id = "19" class="tabs container-four container-four-a">
+          <div id="19" class="tabs container-four container-four-a contacts government share">
             <h4>Government on request</h4>
-            <span class = "cost">-3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">-3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -473,16 +506,16 @@
         </center>
       </div>
       <div class="wrapper-four">
-          <center>
-          <div id = "20" class="tabs container-four container-four-a">
+        <center>
+          <div id="20" class="tabs container-four container-four-a contacts academics share">
             <h4>Academic Researchers</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -490,36 +523,37 @@
         </center>
       </div>
       <div class="wrapper-four">
-          <center>
-          <div id = "21" class="tabs container-four container-four-a">
+        <center>
+          <div id="21" class="tabs container-four container-four-a contacts corporations share">
             <h4>Other Corps</h4>
-            <span class = "cost">+3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">+3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">-4</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-4</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
           </div>
-        </cetner>
+          </cetner>
       </div>
       <div class="wrapper-four">
-          <div data-arrow-value = "3" id = "arrow_seven" class="draw-card arrow-left-div"><span class="arrow-left"></span>Draw Three Cards</div>
+        <div data-arrow-value="3" id="arrow_seven" class="draw-card arrow-left-div"><span class="arrow-left"></span>Draw
+          Three Cards</div>
       </div>
       <div class="wrapper-four">
-          <center>
-          <div id = "22" class="tabs container-four container-four-b">
+        <center>
+          <div id="22" class="tabs container-four container-four-b contacts profiling collect">
             <h4>Profiling</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+1</span>
+            <span class="cost">-2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -527,16 +561,16 @@
         </center>
       </div>
       <div class="wrapper-four">
-          <center>
-          <div id = "23" class="tabs container-four container-four-b">
+        <center>
+          <div id="23" class="tabs container-four container-four-b contacts marketing collect">
             <h4>Marketing</h4>
-            <span class = "cost">+4</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-3</span>
+            <span class="cost">+4</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-3</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -544,49 +578,54 @@
         </center>
       </div>
       <div class="wrapper-four">
-          <center>
-          <div id = "24" class="tabs container-four container-four-b">
+        <center>
+          <div id="24" class="tabs container-four container-four-b contacts service collect">
             <h4>Provide Service, maintain site</h4>
-            <span class = "cost">+1</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">0</span>
+            <span class="cost">+1</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">0</span>
             <br>
-            <span class = "cost">-2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
           </div>
         </center>
-      </div>
-  </div>
-  <div class="wrapper-four">
-      <div data-arrow-value = "3" id = "arrow_eight" class="draw-card arrow-down4-div"><span class="arrow-down4"></span>Draw Three Cards</div>
-  </div>
-
-
-  <!--************************Row Five*****************************************-->
-  <div class="holder-five">
-    <div class = "titles">
-      <div class = "title-left">
-        <span><h1>Collecting Site Activity</h1></span>
-      </div>
-      <div class = "title-right">
-        <span><h1>Sharing Site Activity</h1></span>
       </div>
     </div>
+    <div class="wrapper-four">
+      <div data-arrow-value="3" id="arrow_eight" class="draw-card arrow-down4-div"><span class="arrow-down4"></span>Draw
+        Three Cards</div>
+    </div>
+
+
+    <!--************************Row Five*****************************************-->
+    <div class="holder-five">
+      <div class="titles">
+        <div class="title-left">
+          <span>
+            <h1>Collecting Site Activity</h1>
+          </span>
+        </div>
+        <div class="title-right">
+          <span>
+            <h1>Sharing Site Activity</h1>
+          </span>
+        </div>
+      </div>
       <div class="wrapper-five">
         <center>
-          <div id = "25" class="tabs container-five container-five-a">
+          <div id="25" class="tabs container-five container-five-a activity service collect">
             <h4>Provide Service, Maintain Site</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">+2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -594,16 +633,16 @@
         </center>
       </div>
       <div class="wrapper-five">
-          <center>
-          <div id = "26" class="tabs container-five container-five-a">
+        <center>
+          <div id="26" class="tabs container-five container-five-a activity marketing collect">
             <h4>Marketing</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -611,36 +650,37 @@
         </center>
       </div>
       <div class="wrapper-five">
-          <center>
-          <div id = "27" class="tabs container-five container-five-a">
+        <center>
+          <div id="27" class="tabs container-five container-five-a activity profiling collect">
             <h4>Profiling</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-1</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+1</span>
+            <span class="cost">-1</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
           </div>
-        </cetner>
+          </cetner>
       </div>
       <div class="wrapper-five">
-          <div data-arrow-value = "4" id = "arrow_nine" class="draw-card arrow-right2-div"><span class="arrow-right2"></span>Draw Four Cards</div>
+        <div data-arrow-value="4" id="arrow_nine" class="draw-card arrow-right2-div"><span
+            class="arrow-right2"></span>Draw Four Cards</div>
       </div>
       <div class="wrapper-five">
-          <center>
-          <div id = "28" class="tabs container-five container-five-b">
+        <center>
+          <div id="28" class="tabs container-five container-five-b activity corporations share">
             <h4>Other Corps</h4>
-            <span class = "cost">+5</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">+5</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-5</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-5</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -648,16 +688,16 @@
         </center>
       </div>
       <div class="wrapper-five">
-          <center>
-          <div id = "29" class="tabs container-five container-five-b">
+        <center>
+          <div id="29" class="tabs container-five container-five-b activity academics share">
             <h4>Academic Researchers</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+2</span>
+            <span class="cost">-2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+2</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -665,48 +705,53 @@
         </center>
       </div>
       <div class="wrapper-five">
-          <center>
-          <div id = "30" class="tabs container-five container-five-b">
+        <center>
+          <div id="30" class="tabs container-five container-five-b activity government share">
             <h4>Government on Request</h4>
-            <span class = "cost">-3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">-3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
           </div>
         </center>
-      </div>
-  </div>
-  <div class="wrapper-five">
-      <div data-arrow-value = "4" id = "arrow_ten" class="draw-card arrow-down5-div"><span class="arrow-down5"></span>Draw Four Cards</div>
-  </div>
-
-  <!--************************Row Six****************************************-->
-  <div class="holder-six">
-    <div class = "titles">
-      <div class = "title-left">
-        <span><h1>Sharing Location Data</h1></span>
-      </div>
-      <div class = "title-right">
-        <span><h1>Collecting Location Data</h1></span>
       </div>
     </div>
+    <div class="wrapper-five">
+      <div data-arrow-value="4" id="arrow_ten" class="draw-card arrow-down5-div"><span class="arrow-down5"></span>Draw
+        Four Cards</div>
+    </div>
+
+    <!--************************Row Six****************************************-->
+    <div class="holder-six">
+      <div class="titles">
+        <div class="title-left">
+          <span>
+            <h1>Sharing Location Data</h1>
+          </span>
+        </div>
+        <div class="title-right">
+          <span>
+            <h1>Collecting Location Data</h1>
+          </span>
+        </div>
+      </div>
       <div class="wrapper-six">
         <center>
-          <div id = "31" class="tabs container-six container-six-a">
+          <div id="31" class="tabs container-six container-six-a location government share">
             <h4>Government on request</h4>
-            <span class = "cost">-3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">-3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -714,16 +759,16 @@
         </center>
       </div>
       <div class="wrapper-six">
-          <center>
-          <div id = "32" class="tabs container-six container-six-a">
+        <center>
+          <div id="32" class="tabs container-six container-six-a location academics share">
             <h4>Academic Researchers</h4>
-            <span class = "cost">+3</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+3</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-3</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+3</span>
+            <span class="cost">-3</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+3</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
@@ -731,36 +776,37 @@
         </center>
       </div>
       <div class="wrapper-six">
-          <center>
-          <div id = "33" class="tabs container-six container-six-a">
+        <center>
+          <div id="33" class="tabs container-six container-six-a location corporations share">
             <h4>Other Corps</h4>
-            <span class = "cost">+4</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">+4</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-4</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+4</span>
+            <span class="cost">-4</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+4</span>
             <br>
             <button type="button" class="collect-button">Share</button>
             <button type="button" class="not-collect-button">Do Not Share</button>
           </div>
-        </cetner>
+          </cetner>
       </div>
       <div class="wrapper-six">
-          <div data-arrow-value = "4" id = "arrow_eleven" class="draw-card arrow-left2-div"><span class="arrow-left2"></span>Draw Four Cards</div>
+        <div data-arrow-value="4" id="arrow_eleven" class="draw-card arrow-left2-div"><span
+            class="arrow-left2"></span>Draw Four Cards</div>
       </div>
       <div class="wrapper-six">
-          <center>
-          <div id = "34" class="tabs container-six container-six-b">
+        <center>
+          <div id="34" class="tabs container-six container-six-b location profiling collect">
             <h4>Profiling</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">-1</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+1</span>
+            <span class="cost">-1</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -768,16 +814,16 @@
         </center>
       </div>
       <div class="wrapper-six">
-          <center>
-          <div id = "35" class="tabs container-six container-six-b">
+        <center>
+          <div id="35" class="tabs container-six container-six-b location marketing collect">
             <h4>Marketing</h4>
-            <span class = "cost">+4</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-4</span>
+            <span class="cost">+4</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-4</span>
             <br>
-            <span class = "cost">-4</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">+4</span>
+            <span class="cost">-4</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">+4</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
@@ -785,23 +831,24 @@
         </center>
       </div>
       <div class="wrapper-six">
-          <center>
-          <div id = "36" class="tabs container-six container-six-b">
+        <center>
+          <div id="36" class="tabs container-six container-six-b location service collect">
             <h4>Provide Service, maintain site</h4>
-            <span class = "cost">+2</span>
-            <img class = "img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
-            <span class = "benefit">-2</span>
+            <span class="cost">+2</span>
+            <img class="img-resource" src="../public/images/resources.png" alt="resources" height="60" width="60">
+            <span class="benefit">-2</span>
             <br>
-            <span class = "cost">+2</span>
-            <img class = "img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
-            <span class = "benefit">-1</span>
+            <span class="cost">+2</span>
+            <img class="img-trust" src="../public/images/trust.png" alt="trust" height="60" width="60">
+            <span class="benefit">-1</span>
             <br>
             <button type="button" class="collect-button">Collect</button>
             <button type="button" class="not-collect-button">Do Not Collect</button>
           </div>
         </center>
       </div>
-  </div>
+    </div>
 
 </body>
+
 </html>
