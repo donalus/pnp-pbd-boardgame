@@ -453,6 +453,11 @@ div.arrow-left2-div:hover {
   width: 100px;
   height: 70px;
 }
+
+.arrow-disabled {
+  color: gray;
+}
+
 /**********************Buttns  ***************************************/
 
 .benefit {
@@ -512,7 +517,7 @@ div.arrow-left2-div:hover {
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 60%;
+  width: 80%;
   height: 55%;
 }
 

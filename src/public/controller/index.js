@@ -1,12 +1,4 @@
 let deckArray = [];
-let chosenCardsArray = [];
-let gameTabs = [];
-let chosenTabs = [];
-let decisionsMade = [];
-
-//Local Point Variables
-var userTrustPoints = 25;
-var devTypePoints = 25;
 
 function saveGame() {}
 
@@ -32,47 +24,41 @@ function shuffleArray(a) {
 }
 
 function drawCard() {
-  if (deckArray.length != 0) {
-    
-    // disableElements(obj);
-    var activeCardsArray = [];
-    var collected_cards = $("#collected-cards");
-    
-    var arrow_number = $(this).attr("data-arrow-value");
-    // Get the modal
-    var modal = $("#myModal");
-    // Get the <span> element that closes the modal
-    var span = $(".close:first");
-    // When the user clicks the button, open the modal
+  if (deckArray.length > 0) {
+    $(this).off("click").addClass("arrow-disabled");
 
-    // var chosen = shuffle();
-    var modal_div = $("#deck_content");
+    var arrow_number = $(this).attr("data-arrow-value");
+
+    /*
     var elem_copy = deckArray[0].cloneNode(true);
     if (!elem_copy || typeof (elem_copy == "undefined")) {
-      collected_cards.append(elem_copy);
-      modal_div.append(deckArray[0]);
+      $("#collected-cards").append(elem_copy);
+      $("#deck_content").append(deckArray[0]);
       chosenCardsArray.push(elem_copy);
       activeCardsArray.push(elem_copy);
     } else {
       console.log("no");
     }
-
-    cardEvent(activeCardsArray);
-
-    modal.show();
+    */
+    console.log("drawCard: ", arrow_number);
+    for (var i = 0; i < arrow_number; i++) {
+      var active_card = $(deckArray.shift());
+      $("#collected-cards").append(active_card);
+      $("#deck_content").append(active_card.clone());
+      cardEvent(active_card);
+    }
+    $("#myModal").show();
     // When the user clicks on <span> (x), close the modal
-    span.on("click", function () {
-      modal.hide();
-      modal_div.children().remove();
-      deckArray.splice(0, arrow_number);
+    $(".close:first").on("click", function () {
+      $("#myModal").hide();
+      $("#deck_content").children().remove();
       openNav();
     });
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
       if ($(event.target).attr("id") == "myModal") {
-        modal.hide();
-        modal_div.children().remove();
-        deckArray.splice(0, arrow_number);
+        $("#myModal").hide();
+        $("#deck_content").children().remove();
         openNav();
       }
     };
@@ -81,330 +67,322 @@ function drawCard() {
   }
 }
 
-
-
-function cardEvent(elem) {
-  var points;
+function cardEvent(card) {
   var devType = "dev";
   var userType = "user";
-  for (var i = 0; i < elem.length; i++) {
-    points = 0;
-    var selected_card;
-    selected_card = elem[i].childNodes[1].id;
-    console.log("cardEvent:", selected_card);
+  var points = 0;
+  var selected_card;
+  selected_card = $(card.children("div.card").get(0)).attr("id");
+  console.log("cardEvent:", selected_card);
 
-    switch (selected_card) {
-      case "card_2":
+  switch (selected_card) {
+    case "card_2":
+      $(
+        ".health.share.container-collected, .contacts.share.container-collected"
+      ).each(function () {
+        addPoints(-3, devType);
+      });
+
+      $(".health.share, .contacts.share").each(function () {
+        if (
+          !$(this).hasClass("container-collected") &&
+          !$(this).hasClass("container-not-collected")
+        ) {
+          dev = parseInt($(this).find(".benefit:first").text());
+          user = parseInt($(this).find(".benefit:last").text());
+          addMultiplePoints(user, dev);
+          $(this).addClass("container-not-collected");
+        }
+      });
+      break;
+    case "card_3":
+      $(".contacts.share.container-collected").each(function () {
+        addPoints(-3, devType);
+      });
+
+      $(".contacts.share").each(function () {
+        if (
+          !$(this).hasClass("container-collected") &&
+          !$(this).hasClass("container-not-collected")
+        ) {
+          dev = parseInt($(this).find(".benefit:first").text());
+          user = parseInt($(this).find(".benefit:last").text());
+          addMultiplePoints(user, dev);
+          $(this).addClass("container-not-collected");
+        }
+      });
+      break;
+    case "card_4":
+      points = 1;
+      addPoints(1, devType);
+      break;
+    case "card_5":
+      points = 2;
+      addPoints(points, devType);
+      break;
+    case "card_6":
+      points = 3;
+      addPoints(points, devType);
+      break;
+    case "card_7":
+      if ($(".health.share.corporations").hasClass("container-collected")) {
+        points = 2;
+        addPoints(points, devType);
+      } else {
+        $(".health.share.corporations .cost:first").text("+5");
+      }
+      break;
+    case "card_8":
+      if ($(".purchasing.share.corporations").hasClass("container-collected")) {
+        points = 2;
+        addPoints(points, devType);
+      } else {
+        $(".purchasing.share.corporations .cost:first").text("+5");
+      }
+      break;
+    case "card_9":
+      if ($(".contacts.share.corporations").hasClass("container-collected")) {
+        points = 2;
+        addPoints(points, devType);
+      } else {
+        $(".contacts.share.corporations .cost:first").text("+5");
+      }
+      break;
+    case "card_10":
+      if ($(".location.share.corporations").hasClass("container-collected")) {
+        points = 3;
+        addPoints(points, devType);
+      } else {
+        $(".location.share.corporations .cost:first").text("+6");
+      }
+      break;
+    case "card_11":
+      if ($(".health.service.collect").hasClass("container-collected")) {
+        points = 1;
+        addPoints(points, devType);
+      } else {
+        $(".health.service.colllect .cost:first").text("+3");
+      }
+      break;
+    case "card_13":
+      if ($(".activity.profiling.collect").hasClass("container-collected")) {
+        points = 1;
+        addPoints(points, devType);
+      } else {
+        $(".activity.profiling.collect .cost:first").text("+3");
+      }
+      break;
+    case "card_14":
+      if ($(".contacts.service.collect").hasClass("container-collected")) {
+        points = 1;
+        addPoints(points, devType);
+      } else {
+        $(".contacts.service.collect .cost:first").text("+2");
+      }
+      break;
+    case "card_15":
+      if ($(".demographic.service.collect").hasClass("container-collected")) {
+        points = 1;
+        addPoints(points, devType);
+      }
+      break;
+    case "card_17":
+      if (
         $(
-          ".health.share.container-collected, .contacts.share.container-collected"
-        ).each(function () {
-          addPoints(-3, devType);
+          ".contacts.share.container-collected, .contacts.collect.container-collected"
+        ).length > 0
+      ) {
+        points = 3;
+        addPoints(points, userType);
+      } else {
+        $(".contacts.collect").each(function () {
+          item = $(this).find(".benefit:first");
+          curBene = parseInt(item.text());
+          item.text(curBene + 3);
         });
-
-        $(".health.share, .contacts.share").each(function () {
+      }
+      break;
+    case "card_18":
+      if (
+        $(
+          ".activity.share.container-collected, .activity.collect.container-collected"
+        ).length > 0
+      ) {
+        points = 3;
+        addPoints(points, userType);
+      } else {
+        $(".activity.collect").each(function () {
+          item = $(this).find(".benefit:last");
+          curBene = parseInt(item.text());
+          item.text(curBene + 3);
+        });
+      }
+      break;
+    case "card_19":
+      if (
+        $(
+          ".demographic.share.container-collected, .demographic.collect.container-collected"
+        ).length > 0
+      ) {
+        points = 3;
+        addPoints(points, userType);
+      }
+      break;
+    case "card_20":
+      if ($(".corporations.share.container-collected").length > 3) {
+        addMultiplePoints(-2, -2);
+      }
+      break;
+    case "card_21":
+      if ($(".corporations.share.container-collected").length == 0) {
+        addMultiplePoints(2, 2);
+      }
+      break;
+    case "card_22":
+      $(".demographic.profiling, .health.profiling").each(function () {
+        var devCost = parseInt($(this).find(".cost:first").text());
+        var userCost = parseInt($(this).find(".cost:last").text());
+        var devBene = parseInt($(this).find(".benefit:first").text());
+        var userBene = parseInt($(this).find(".benefit:last").text());
+        if ($(this).hasClass("container-not-collected")) {
+          $(this).removeClass("container-not-collected");
+          $(this).addClass("container-collected");
+          addMultiplePoints(userCost - userBene, devCost - devBene);
+        } else if (!$(this).hasClass("container-collected")) {
+          $(this).addClass(".container-collected");
+          addMultiplePoints(userCost, devCost);
+        }
+      });
+      break;
+    case "card_23":
+      $(".purchasing.marketing, .contacts.marketing").each(function () {
+        var devCost = parseInt($(this).find(".cost:first").text());
+        var userCost = parseInt($(this).find(".cost:last").text());
+        var devBene = parseInt($(this).find(".benefit:first").text());
+        var userBene = parseInt($(this).find(".benefit:last").text());
+        if ($(this).hasClass("container-not-collected")) {
+          $(this).removeClass("container-not-collected");
+          $(this).addClass("container-collected");
+          addMultiplePoints(userCost - userBene, devCost - devBene);
+        } else if ($(this).hasClass("container-collected")) {
+          addPoints(1, devType);
+        }
+      });
+      if (
+        !$(".purchasing.marketing").hasClass("container-collected") &&
+        !$(".purchasing.marketing").hasClass("container-not-collected")
+      ) {
+        $(".purchasing.marketing").find(".cost:first").text(5);
+      }
+      break;
+    case "card_24":
+      if ($(".health.collect.container-not-collected").length == 3) {
+        points = 3;
+        addPoints(points, devType);
+      } else {
+        $(".health.collect").each(function () {
           if (
             !$(this).hasClass("container-collected") &&
             !$(this).hasClass("container-not-collected")
           ) {
-            dev = parseInt($(this).find(".benefit:first").text());
-            user = parseInt($(this).find(".benefit:last").text());
-            addMultiplePoints(user, dev);
-            $(this).addClass("container-not-collected");
+            var item = $(this).find(".benefit:first");
+            var cur_dev_points = parseInt(item.text());
+            item.text(cur_dev_points + 3);
           }
         });
-        break;
-      case "card_3":
-        $(".contacts.share.container-collected").each(function () {
-          addPoints(-3, devType);
-        });
-
-        $(".contacts.share").each(function () {
+      }
+      break;
+    case "card_25":
+      if ($(".contacts.collect.container-not-collected").length == 3) {
+        points = 1;
+        addPoints(points, devType);
+      } else {
+        $(".contacts.collect").each(function () {
           if (
             !$(this).hasClass("container-collected") &&
             !$(this).hasClass("container-not-collected")
           ) {
-            dev = parseInt($(this).find(".benefit:first").text());
-            user = parseInt($(this).find(".benefit:last").text());
-            addMultiplePoints(user, dev);
-            $(this).addClass("container-not-collected");
+            var item = $(this).find(".benefit:first");
+            var cur_dev_points = parseInt(item.text());
+            item.text(cur_dev_points + 1);
           }
         });
-        break;
-      case "card_4":
+      }
+      break;
+    case "card_26":
+      if (parseInt($("#user-points").text()) > 15) {
         points = 1;
-        addPoints(1, devType);
-        break;
-      case "card_5":
-        points = 2;
         addPoints(points, devType);
-        break;
-      case "card_6":
-        points = 3;
-        addPoints(points, devType);
-        break;
-      case "card_7":
-        if ($(".health.share.corporations").hasClass("container-collected")) {
-          points = 2;
-          addPoints(points, devType);
-        } else {
-          $(".health.share.corporations .cost:first").text("+5");
-        }
-        break;
-      case "card_8":
-        if (
-          $(".purchasing.share.corporations").hasClass("container-collected")
-        ) {
-          points = 2;
-          addPoints(points, devType);
-        } else {
-          $(".purchasing.share.corporations .cost:first").text("+5");
-        }
-        break;
-      case "card_9":
-        if ($(".contacts.share.corporations").hasClass("container-collected")) {
-          points = 2;
-          addPoints(points, devType);
-        } else {
-          $(".contacts.share.corporations .cost:first").text("+5");
-        }
-        break;
-      case "card_10":
-        if ($(".location.share.corporations").hasClass("container-collected")) {
-          points = 3;
-          addPoints(points, devType);
-        } else {
-          $(".location.share.corporations .cost:first").text("+6");
-        }
-        break;
-      case "card_11":
-        if ($(".health.service.collect").hasClass("container-collected")) {
-          points = 1;
-          addPoints(points, devType);
-        } else {
-          $(".health.service.colllect .cost:first").text("+3");
-        }
-        break;
-      case "card_13":
-        if ($(".activity.profiling.collect").hasClass("container-collected")) {
-          points = 1;
-          addPoints(points, devType);
-        } else {
-          $(".activity.profiling.collect .cost:first").text("+3");
-        }
-        break;
-      case "card_14":
-        if ($(".contacts.service.collect").hasClass("container-collected")) {
-          points = 1;
-          addPoints(points, devType);
-        } else {
-          $(".contacts.service.collect .cost:first").text("+2");
-        }
-        break;
-      case "card_15":
-        if ($(".demographic.service.collect").hasClass("container-collected")) {
-          points = 1;
-          addPoints(points, devType);
-        }
-        break;
-      case "card_17":
-        if (
-          $(
-            ".contacts.share.container-collected, .contacts.collect.container-collected"
-          ).length > 0
-        ) {
-          points = 3;
-          addPoints(points, userType);
-        } else {
-          $(".contacts.collect").each(function () {
-            item = $(this).find(".benefit:first");
-            curBene = parseInt(item.text());
-            item.text(curBene + 3);
-          });
-        }
-        break;
-      case "card_18":
-        if (
-          $(
-            ".activity.share.container-collected, .activity.collect.container-collected"
-          ).length > 0
-        ) {
-          points = 3;
-          addPoints(points, userType);
-        } else {
-          $(".activity.collect").each(function () {
-            item = $(this).find(".benefit:last");
-            curBene = parseInt(item.text());
-            item.text(curBene + 3);
-          });
-        }
-        break;
-      case "card_19":
-        if (
-          $(
-            ".demographic.share.container-collected, .demographic.collect.container-collected"
-          ).length > 0
-        ) {
-          points = 3;
-          addPoints(points, userType);
-        }
-        break;
-      case "card_20":
-        if ($(".corporations.share.container-collected").length > 3) {
-          addMultiplePoints(-2, -2);
-        }
-        break;
-      case "card_21":
-        if ($(".corporations.share.container-collected").length == 0) {
-          addMultiplePoints(2, 2);
-        }
-        break;
-      case "card_22":
-        $(".demographic.profiling, .health.profiling").each(function () {
-          var devCost = parseInt($(this).find(".cost:first").text());
-          var userCost = parseInt($(this).find(".cost:last").text());
-          var devBene = parseInt($(this).find(".benefit:first").text());
-          var userBene = parseInt($(this).find(".benefit:last").text());
-          if ($(this).hasClass("container-not-collected")) {
-            $(this).removeClass("container-not-collected");
-            $(this).addClass("container-collected");
-            addMultiplePoints(userCost - userBene, devCost - devBene);
-          } else if (!$(this).hasClass("container-collected")) {
-            $(this).addClass(".container-collected");
-            addMultiplePoints(userCost, devCost);
+      }
+      break;
+    case "card_28":
+      if ($(".health.corporations.container-collected").length > 0) {
+        points = -2;
+        addPoints(points, userType);
+      }
+      $(".health.corporations .cost:last").text("-6");
+      break;
+    case "card_29":
+      if ($(".activity.corporations").hasClass("container-collected")) {
+        points = -2;
+        addPoints(points, userType);
+      } else {
+        $(".activity.corporations").find(".cost:last").text("-7");
+      }
+      break;
+    case "card_30":
+      if ($(".location.collected.container-collected").length > 0) {
+        points = -2;
+        addPoints(points, userType);
+      }
+      break;
+    case "card_31":
+      points = 3;
+      addPoints(points, userType);
+      break;
+    case "card_32":
+      points = 2;
+      addPoints(points, userType);
+      break;
+    case "card_33":
+      points = 1;
+      addPoints(points, userType);
+      break;
+    case "card_34":
+      $(".collect.container-collected").each(function () {
+        var categories = [
+          "demographics",
+          "health",
+          "purchasing",
+          "contacts",
+          "activity",
+          "location",
+        ];
+        categories.forEach(function (category) {
+          if ($(this).hasClass(category)) {
+            var gov = $(".share.government." + category);
+            var devCost = parseInt(gov.find(".cost:first").text());
+            var userCost = parseInt(gov.find(".cost:last").text());
+            var devBene = parseInt(gov.find(".benefit:first").text());
+            var userBene = parseInt(gov.find(".benefit:first").text());
+            if (gov.hasClass(".container-not-collected")) {
+              gov.removeClass("container-not-collected");
+              gov.addClass("container-collected");
+              addMultiplePoints(userCost - userBene, devCost - devBene);
+            } else if (!gov.hasClass(".container-collected")) {
+              gov.addClass("container-collected");
+              addMultiplePoints(userCost, devCost);
+            }
           }
         });
-        break;
-      case "card_23":
-        $(".purchasing.marketing, .contacts.marketing").each(function () {
-          var devCost = parseInt($(this).find(".cost:first").text());
-          var userCost = parseInt($(this).find(".cost:last").text());
-          var devBene = parseInt($(this).find(".benefit:first").text());
-          var userBene = parseInt($(this).find(".benefit:last").text());
-          if ($(this).hasClass("container-not-collected")) {
-            $(this).removeClass("container-not-collected");
-            $(this).addClass("container-collected");
-            addMultiplePoints(userCost - userBene, devCost - devBene);
-          } else if ($(this).hasClass("container-collected")) {
-            addPoints(1, devType);
-          }
-        });
-        if (
-          !$(".purchasing.marketing").hasClass("container-collected") &&
-          !$(".purchasing.marketing").hasClass("container-not-collected")
-        ) {
-          $(".purchasing.marketing").find(".cost:first").text(5);
-        }
-        break;
-      case "card_24":
-        if ($(".health.collect.container-not-collected").length == 3) {
-          points = 3;
-          addPoints(points, devType);
-        } else {
-          $(".health.collect").each(function () {
-            if (
-              !$(this).hasClass("container-collected") &&
-              !$(this).hasClass("container-not-collected")
-            ) {
-              var item = $(this).find(".benefit:first");
-              var cur_dev_points = parseInt(item.text());
-              item.text(cur_dev_points + 3);
-            }
-          });
-        }
-        break;
-      case "card_25":
-        if ($(".contacts.collect.container-not-collected").length == 3) {
-          points = 1;
-          addPoints(points, devType);
-        } else {
-          $(".contacts.collect").each(function () {
-            if (
-              !$(this).hasClass("container-collected") &&
-              !$(this).hasClass("container-not-collected")
-            ) {
-              var item = $(this).find(".benefit:first");
-              var cur_dev_points = parseInt(item.text());
-              item.text(cur_dev_points + 1);
-            }
-          });
-        }
-        break;
-      case "card_26":
-        if (parseInt($("#user-points").text()) > 15) {
-          points = 1;
-          addPoints(points, devType);
-        }
-        break;
-      case "card_28":
-        if ($(".health.corporations.container-collected").length > 0) {
-          points = -2;
-          addPoints(points, userType);
-        }
-        $(".health.corporations .cost:last").text("-6");
-        break;
-      case "card_29":
-        if ($(".activity.corporations").hasClass("container-collected")) {
-          points = -2;
-          addPoints(points, userType);
-        } else {
-          $(".activity.corporations").find(".cost:last").text("-7");
-        }
-        break;
-      case "card_30":
-        if ($(".location.collected.container-collected").length > 0) {
-          points = -2;
-          addPoints(points, userType);
-        }
-        break;
-      case "card_31":
-        points = 3;
-        addPoints(points, userType);
-        break;
-      case "card_32":
-        points = 2;
-        addPoints(points, userType);
-        break;
-      case "card_33":
-        points = 1;
-        addPoints(points, userType);
-        break;
-      case "card_34":
-        $(".collect.container-collected").each(function () {
-          var categories = [
-            "demographics",
-            "health",
-            "purchasing",
-            "contacts",
-            "activity",
-            "location",
-          ];
-          categories.forEach(function (category) {
-            if ($(this).hasClass(category)) {
-              var gov = $(".share.government." + category);
-              var devCost = parseInt(gov.find(".cost:first").text());
-              var userCost = parseInt(gov.find(".cost:last").text());
-              var devBene = parseInt(gov.find(".benefit:first").text());
-              var userBene = parseInt(gov.find(".benefit:first").text());
-              if (gov.hasClass(".container-not-collected")) {
-                gov.removeClass("container-not-collected");
-                gov.addClass("container-collected");
-                addMultiplePoints(userCost - userBene, devCost - devBene);
-              } else if (!gov.hasClass(".container-collected")) {
-                gov.addClass("container-collected");
-                addMultiplePoints(userCost, devCost);
-              }
-            }
-          });
-        });
-        break;
-      case "card_36":
-        //User Action
-        break;
-      default:
-    }
+      });
+      break;
+    case "card_36":
+      //User Action
+      break;
+    default:
   }
 }
-
 
 function addPoints(points, type) {
   $("#loadingModal").show();
@@ -494,7 +472,6 @@ function collected() {
   }
   currentDiv.attr("collected", collected);
 
-  chosenTabs.push(currentDiv);
   addMultiplePoints(userTrust, devTime);
 }
 
@@ -509,13 +486,8 @@ function closeNav() {
 }
 
 jQuery(function () {
-  let parentDeck = $("#deck");
   let childCards = $(".pycard");
-  deckArray = [...childCards];
-
-  //Add Tabs to deckArray
-  let tabs = $(".tabs");
-  gameTabs = [...tabs];
+  deckArray = shuffleArray([...childCards]);
 
   $("button").on("click", collected);
   $("#resetGame").on("click", resetGame);
