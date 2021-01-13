@@ -1,10 +1,7 @@
 const { app, BrowserWindow } = require("electron");
-const knex = require("./src/knex/knex.js");
 const path = require("path");
 const url = require("url");
-const { electron } = require("process");
-const { ipcMain } = require("electron");
-const ejse = require('ejs-electron');
+const ejse = require("ejs-electron");
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -35,15 +32,4 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
-});
-
-ipcMain.on("synchronous-message", (event, args) => {
-  console.log(args);
-  event.returnValue = "sync pong";
-});
-
-ipcMain.on("asynchronous-message", (event, arg) => {
-  console.log(arg);
-
-  event.sender.send("asynchronous-reply", "async pong");
 });
