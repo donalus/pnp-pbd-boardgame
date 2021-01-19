@@ -1,2 +1,3 @@
 # pnp-pbd-boardgame
-Pass-and-play version of PbD Boardgram
+
+Pass-and-play version of PbD Boardgame
